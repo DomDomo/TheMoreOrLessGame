@@ -1,17 +1,27 @@
-function App() {
+import React from 'react'
+import './index.css'
+
+const Hello = ({style}) => {
   return (
-    <div>
-      <header>
-        <h1>The Bigger Smaller Game</h1>
-        <h2>The YouTube Edition</h2>
-        <p>The delay continues</p>
-        <p>The delay continues futher</p>
-        <p>More usless content</p>
-        <p>Even more usless content</p>
-        <p>Guess what, more garbadge</p>
-      </header>
+    <div className={[style, "half"].join(' ')}>
+      <p>Hello world</p>
     </div>
-  );
+  )
 }
 
-export default App;
+
+const App = () => {
+  const styles = {
+    success: "success",
+    error: "error"
+  }
+
+  return (
+    <div className="splitScreen">
+      <Hello style={styles.success}/>
+      <Hello style={styles.error}/>
+  </div>
+  )
+}
+
+export default App
