@@ -26,29 +26,25 @@ code {
   align-items: center;
 }
 
-.half h1,
-h2,
 p {
   color: rgb(255, 255, 255);
   display: block;
   text-align: center;
-  margin: 0;
+  margin: 0 7% 5px 7%;
+  font-size: 1.5em;
 }
 
-.half h2 {
+.half .videoTitle {
   margin: 0 7%;
   font-size: 3.5rem;
+  font-weight: bold;
 }
 
-.half h1 {
+.half .videoViews {
   margin: 0 7%;
   font-size: 5rem;
   color: rgb(255, 249, 137);
-}
-
-.half p {
-  margin: 0 7% 5px 7%;
-  font-size: 1.5em;
+  font-weight: bold;
 }
 
 .disc {
@@ -87,7 +83,7 @@ p {
   flex-direction: row;
   justify-content: space-around;
   width: 15rem;
-  padding: 1rem 3rem 1rem 3rem;
+  padding: 1rem 3rem;
   margin: 0 auto 0.6rem;
   border-radius: 2.5rem;
   border: 0.125rem solid #fff;

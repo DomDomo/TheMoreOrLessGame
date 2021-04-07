@@ -24,14 +24,14 @@ const Side = (props) => {
 
   return (
     <div className="half" style={imageStyle}>
-      <h2>"{props.video.name}"</h2>
+      <p className="videoTitle">"{props.video.name}"</p>
       <p>has</p>
       
       {props.video.showViews
         ? <Buttons />
-        : <h1>{props.video.views}</h1>
+        : <p className="videoViews">{props.video.views}</p>
       }
-      <p>views</p>
+      <p >views</p>
     </div>
   )
 }
