@@ -2,10 +2,6 @@
 
 This project aims to recreate [The Higher Lower Game](http://www.higherlowergame.com/), but instead of search results, it will take data from YouTube: subscribers of a channel, views of a video.
 
-## TO DO
-
-Reintall React and setup basic website template
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

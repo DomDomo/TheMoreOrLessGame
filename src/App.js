@@ -1,9 +1,21 @@
 import React from 'react'
 import './index.css'
+const Cicada = require( "./images/3301.jpg" );
+const Roomba = require( "./images/Roomba.jpg" );
 
 const Side = (props) => {
+
+  const imageStyle = {
+    boxShadow: "inset 0 0 0 100vw rgba(0,0,0,0.35)",
+    backgroundImage: `url(${props.video.image})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center center",
+    
+  };
+
+
   return (
-    <div className={[props.style, "half"].join(' ')}>
+    <div className={[props.style, "half"].join(' ')} style={imageStyle}>
       <h2>"{props.video.name}"</h2>
       <p>has</p>
       <h1>{props.video.views}</h1>
@@ -28,12 +40,14 @@ const App = () => {
   }
 
   const video1 = {
-    name: "Hello world",
-    views: "500k"
+    name: "Cicada 3301: An Internet Mystery",
+    views: "23,984,345",
+    image: Cicada.default,
   };
   const video2 = {
-    name: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the.",
-    views: "27M"
+    name: "The Roomba That Screams When it Bumps Into Stuff",
+    views: "21,460,437",
+    image: Roomba.default,
   };
 
   return (

@@ -16,14 +16,6 @@ code {
   position: relative;
 }
 
-.error {
-  background: rgb(177, 49, 49);
-}
-
-.success {
-  background: rgb(45, 141, 32);
-}
-
 .splitScreen {
   min-height: 100vh;
   display: flex;
@@ -41,6 +33,7 @@ code {
 .half h1,
 h2,
 p {
+  color: rgb(255, 255, 255);
   display: block;
   text-align: center;
   margin: 0;
