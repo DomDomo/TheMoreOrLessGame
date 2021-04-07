@@ -1,10 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Nunito", sans-serif;
 }
 
 code {
@@ -41,6 +37,18 @@ p {
 
 .half h2 {
   margin: 0 7%;
+  font-size: 3.5rem;
+}
+
+.half h1 {
+  margin: 0 7%;
+  font-size: 5rem;
+  color: rgb(255, 249, 137);
+}
+
+.half p {
+  margin: 0 7% 5px 7%;
+  font-size: 1.5em;
 }
 
 .disc {
@@ -58,7 +66,66 @@ p {
   align-items: center;
 }
 
+.arrow-up {
+  display: block;
+  margin-top: 6%;
+  border-left: 0.7rem solid transparent;
+  border-right: 0.7rem solid transparent;
+  border-bottom: 0.9rem solid white;
+}
+
+.arrow-down {
+  display: block;
+  margin-top: 6%;
+  border-left: 0.7rem solid transparent;
+  border-right: 0.7rem solid transparent;
+  border-top: 0.9rem solid white;
+}
+
+.game-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 15rem;
+  padding: 1rem 3rem 1rem 3rem;
+  margin: 0 auto 0.6rem;
+  border-radius: 2.5rem;
+  border: 0.125rem solid #fff;
+  background: transparent no-repeat 0 0;
+  color: #fff989;
+  font-weight: bolder;
+  font-size: 1.5em;
+  font-family: "Nunito", sans-serif;
+  transition: all 0.1s ease-out;
+}
+
+.game-button:hover {
+  color: black;
+  background: white;
+  cursor: pointer;
+}
+
+.more:hover span {
+  border-bottom: 0.9rem solid black;
+}
+
+.less:hover span {
+  border-top: 0.9rem solid black;
+}
+
+.game-button:focus {
+  outline-style: none;
+}
+
+.game-button:active {
+  transform: scale(0.9);
+}
+
 @media screen and (max-width: 1080px) {
+  html {
+    font-size: 8px;
+  }
+
   .splitScreen {
     flex-direction: column;
   }
@@ -66,5 +133,14 @@ p {
   .half {
     width: 100%;
     min-height: 50vh;
+  }
+
+  .half p {
+    font-size: 2rem;
+  }
+
+  .game-button {
+    font-size: 1.7rem;
+    width: 17rem;
   }
 }

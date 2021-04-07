@@ -3,6 +3,15 @@ import './index.css'
 const Cicada = require( "./images/3301.jpg" );
 const Roomba = require( "./images/Roomba.jpg" );
 
+const Buttons = () => {
+  return (
+    <div >
+      <button className="game-button more">More <span class="arrow-up"></span></button>
+      <button className="game-button less">Less <span class="arrow-down"></span></button>
+    </div>
+  )
+}
+
 const Side = (props) => {
 
   const imageStyle = {
@@ -13,12 +22,15 @@ const Side = (props) => {
     
   };
 
-
   return (
-    <div className={[props.style, "half"].join(' ')} style={imageStyle}>
+    <div className="half" style={imageStyle}>
       <h2>"{props.video.name}"</h2>
       <p>has</p>
-      <h1>{props.video.views}</h1>
+      
+      {props.video.showViews
+        ? <Buttons />
+        : <h1>{props.video.views}</h1>
+      }
       <p>views</p>
     </div>
   )
@@ -34,27 +46,25 @@ const Disc = ({style}) => {
 
 
 const App = () => {
-  const styles = {
-    success: "success",
-    error: "error"
-  }
 
   const video1 = {
     name: "Cicada 3301: An Internet Mystery",
     views: "23,984,345",
     image: Cicada.default,
+    showViews: false,
   };
   const video2 = {
     name: "The Roomba That Screams When it Bumps Into Stuff",
     views: "21,460,437",
     image: Roomba.default,
+    showViews: true,
   };
 
   return (
     <div className="mainView">
       <div className="splitScreen">
-        <Side style={styles.success} video={video1}/>
-        <Side style={styles.error} video={video2}/>
+        <Side video={video1}/>
+        <Side video={video2}/>
     </div>
     <Disc />
   </div>
