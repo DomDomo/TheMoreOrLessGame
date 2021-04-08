@@ -29,6 +29,18 @@ code {
   background-position: center center;
 }
 
+.top,
+.bottom {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  width: 100%;
+}
+
+.top {
+  justify-content: flex-end;
+}
+
 p {
   color: rgb(255, 255, 255);
   display: block;
@@ -79,6 +91,10 @@ p {
   border-left: 0.7rem solid transparent;
   border-right: 0.7rem solid transparent;
   border-top: 0.9rem solid white;
+}
+
+.buttonContainer {
+  margin-top: 1rem;
 }
 
 .game-button {
@@ -142,4 +158,15 @@ p {
     font-size: 1.7rem;
     width: 17rem;
   }
+}
+
+.viewContainer {
+  margin-top: 2.5rem;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+
+.fadeIn {
+  margin: 0;
+  opacity: 1;
 }
