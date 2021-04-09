@@ -4,12 +4,14 @@ import { useCountUp } from 'react-countup';
 import './index.css'
 const Cicada = require( "./images/3301.jpg" );
 const Roomba = require( "./images/Roomba.jpg" );
+const Fallout = require( "./images/76.jpg" );
 
 const Buttons = ({handleClick}) => {
   return (
     <div className="buttonContainer">
       <button onClick={handleClick} className="game-button more">More <span className="arrow-up"></span></button>
       <button onClick={handleClick} className="game-button less">Less <span className="arrow-down"></span></button>
+      <p className="pNextToButtons">views</p>
     </div>
   )
 }
@@ -17,7 +19,7 @@ const Buttons = ({handleClick}) => {
 const ViewView = (props) => {
 
 
-  const viewsToShow = props.video.first ? props.video.views : props.views;
+  const viewsToShow = props.video.leftSide ? props.video.views : props.views;
   // This regex adds commas after 3 digits to make a formatted (locale) string
   const formattedViews = viewsToShow.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -56,11 +58,12 @@ const Side = (props) => {
       <p>has</p>
       </div>
       <div className="bottom">
-      {!props.video.showViews && <Buttons handleClick={props.handleClick}/>}
-      <div className={viewContainerClass}>
-      {props.video.showViews && <ViewView views={countUp} video={props.video}/>}
-      </div>
-      <p >views</p>
+        {!props.video.showViews && <Buttons handleClick={props.handleClick}/>}
+        <div className={viewContainerClass}>
+        {props.video.showViews && <ViewView views={countUp} video={props.video}/>}
+        <p>views</p>
+        </div>
+        
       </div>
     </div>
   )
@@ -78,31 +81,44 @@ const Disc = () => {
 const App = () => {
 
   const [show, setShow] = useState(false);
+  const [win, setWin] = useState(false);
 
   const video1 = {
     name: "Cicada 3301: An Internet Mystery",
     views: 23984345,
     image: Cicada.default,
     showViews: true,
-    first: true,
+    leftSide: true,
   };
   const video2 = {
     name: "The Roomba That Screams When it Bumps Into Stuff",
     views: 21460437,
     image: Roomba.default,
     showViews: show,
-    first: false,
+    leftSide: false,
+  };
+
+  const video3 = {
+    name: "The Fall of 76",
+    views: 25250766,
+    image: Fallout.default,
+    showViews: show,
+    leftSide: false,
   };
 
   const handleClick = () => {
     setShow(true);
+    setWin(true);
   };
+
+  const gameScroller = win ? "splitScreen win" : "splitScreen";
 
   return (
     <div className="mainView">
-      <div className="splitScreen">
+      <div className={gameScroller}>
         <Side video={video1}/>
         <Side handleClick={handleClick} video={video2}/>
+        <Side handleClick={handleClick} video={video3}/>
     </div>
     <Disc />
   </div>
@@ -110,3 +126,6 @@ const App = () => {
 }
 
 export default App
+
+
+//<Side handleClick={handleClick} video={video3}/>
