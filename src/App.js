@@ -7,6 +7,37 @@ const Roomba = require("./images/Roomba.jpg");
 const Fallout = require("./images/76.jpg");
 const IsShe = require("./images/Is_She.jpg");
 
+const mainVids = [
+  {
+    name: "Cicada 3301: An Internet Mystery",
+    views: 23984345,
+    image: Cicada.default,
+    showViews: true,
+    leftSide: true,
+  },
+  {
+    name: "The Roomba That Screams When it Bumps Into Stuff",
+    views: 21460437,
+    image: Roomba.default,
+    showViews: true,
+    leftSide: false,
+  },
+  {
+    name: "The Fall of 76",
+    views: 25250766,
+    image: Fallout.default,
+    showViews: true,
+    leftSide: false,
+  },
+  {
+    name: "Casually Explained: Is She Into You?",
+    views: 16012073,
+    image: IsShe.default,
+    showViews: true,
+    leftSide: false,
+  },
+];
+
 const Buttons = ({ handleClick }) => {
   return (
     <div className="buttonContainer">
@@ -85,38 +116,9 @@ const Disc = () => {
 };
 
 const App = () => {
+  const [videos, setVideos] = useState(mainVids);
   const [show, setShow] = useState(false);
   const [win, setWin] = useState(false);
-
-  const video1 = {
-    name: "Cicada 3301: An Internet Mystery",
-    views: 23984345,
-    image: Cicada.default,
-    showViews: true,
-    leftSide: true,
-  };
-  const video2 = {
-    name: "The Roomba That Screams When it Bumps Into Stuff",
-    views: 21460437,
-    image: Roomba.default,
-    showViews: show,
-    leftSide: false,
-  };
-
-  const video3 = {
-    name: "The Fall of 76",
-    views: 25250766,
-    image: Fallout.default,
-    showViews: show,
-    leftSide: false,
-  };
-  const video4 = {
-    name: "Casually Explained: Is She Into You?",
-    views: 16012073,
-    image: IsShe.default,
-    showViews: show,
-    leftSide: false,
-  };
 
   const handleClick = () => {
     setShow(true);
@@ -128,9 +130,9 @@ const App = () => {
   return (
     <div className="mainView">
       <div className={gameScroller}>
-        <Side video={video1} />
-        <Side handleClick={handleClick} video={video2} />
-        <Side handleClick={handleClick} video={video3} />
+        <Side video={videos[0]} />
+        <Side handleClick={handleClick} video={videos[1]} />
+        <Side handleClick={handleClick} video={videos[2]} />
       </div>
       <Disc />
     </div>
