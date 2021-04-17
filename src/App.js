@@ -19,21 +19,21 @@ const mainVids = [
     name: "The Roomba That Screams When it Bumps Into Stuff",
     views: 21460437,
     image: Roomba.default,
-    showViews: true,
+    showViews: false,
     leftSide: false,
   },
   {
     name: "The Fall of 76",
     views: 25250766,
     image: Fallout.default,
-    showViews: true,
+    showViews: false,
     leftSide: false,
   },
   {
     name: "Casually Explained: Is She Into You?",
     views: 16012073,
     image: IsShe.default,
-    showViews: true,
+    showViews: false,
     leftSide: false,
   },
 ];
@@ -117,12 +117,17 @@ const Disc = () => {
 
 const App = () => {
   const [videos, setVideos] = useState(mainVids);
-  const [show, setShow] = useState(false);
   const [win, setWin] = useState(false);
 
+  useEffect(() => {
+    videos[0].showViews = true;
+    setVideos(videos);
+  }, [videos]);
+
   const handleClick = () => {
-    setShow(true);
     setWin(true);
+    videos[1].showViews = true;
+    setVideos(videos);
   };
 
   const gameScroller = win ? "splitScreen win" : "splitScreen";
