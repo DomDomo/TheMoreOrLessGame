@@ -145,5 +145,3 @@ const App = () => {
 };
 
 export default App;
-
-//<Side handleClick={handleClick} video={video3}/>
