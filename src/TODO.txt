@@ -2,3 +2,4 @@
 //TO DO add API calls to YouTube
 //TO DO add score
 //TO DO add Homepage
+//TO DO add diffrent game modes: subsribers, one channel vidoes, most likes
