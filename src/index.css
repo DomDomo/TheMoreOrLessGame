@@ -37,7 +37,7 @@ code {
   flex-direction: row;
 }
 
-.win-enter-done {
+.buttonPressed {
   opacity: 1;
   transform: translateX(var(--move-distance));
   transition: var(--custom-transition);
@@ -176,7 +176,7 @@ p {
     flex-direction: column;
   }
 
-  .win-enter-done {
+  .buttonPressed {
     opacity: 1;
     transform: translateY(var(--move-distance));
     transition: var(--custom-transition);

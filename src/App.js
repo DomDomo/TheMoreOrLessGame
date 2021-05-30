@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useCountUp } from "react-countup";
 import { mainVids } from "./videos";
 import "./index.css";
-import { CSSTransition } from "react-transition-group";
 
 const timeBeforeDeleting = 2000;
 
@@ -102,13 +101,12 @@ const App = () => {
     } else {
       const timer = setTimeout(() => {
         setWin(false);
-        console.log("This will run after 3 seconds!");
-        console.log(videos);
         const newVideos = videos.slice(1);
         setVideos(newVideos);
       }, timeBeforeDeleting);
       return () => clearTimeout(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [win]);
 
   const handleClick = (video) => {
@@ -123,20 +121,15 @@ const App = () => {
     setVideos(newVideos);
   };
 
-  const sides = videos.slice(0, 3).map((video, index) => {
+  const sides = videos.slice(0, 3).map((video) => {
     return <Side key={video.id} handleClick={handleClick} video={video} />;
   });
 
+  const sideClass = win ? "splitScreen buttonPressed" : "splitScreen";
+
   return (
     <div className="mainView">
-      <CSSTransition
-        in={win}
-        timeout={200}
-        classNames={"win"}
-        onExited={() => console.log("exited")}
-      >
-        <div className="splitScreen">{sides}</div>
-      </CSSTransition>
+      <div className={sideClass}>{sides}</div>
       <Disc />
     </div>
   );
