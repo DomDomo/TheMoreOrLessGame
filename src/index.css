@@ -4,6 +4,7 @@ body,
   height: 100%;
   width: 100%;
   margin: 0;
+  --move-distance: -33.333%;
 }
 
 body {
@@ -29,9 +30,10 @@ code {
   flex-direction: row;
 }
 
-.splitScreen.win {
+.win-enter-done {
+  opacity: 1;
+  transform: translateX(var(--move-distance));
   transition: transform 0.4s ease-out 1.4s;
-  transform: translateX(-33.333%);
 }
 
 .half {
