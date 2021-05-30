@@ -10,7 +10,6 @@ const mainVids = [
     views: 23984345,
     image: Cicada.default,
     showViews: true,
-    leftSide: true,
   },
   {
     id: 2,
@@ -18,7 +17,6 @@ const mainVids = [
     views: 21460437,
     image: Roomba.default,
     showViews: false,
-    leftSide: false,
   },
   {
     id: 3,
@@ -26,7 +24,6 @@ const mainVids = [
     views: 25250766,
     image: Fallout.default,
     showViews: false,
-    leftSide: false,
   },
   {
     id: 4,
@@ -34,7 +31,6 @@ const mainVids = [
     views: 16012073,
     image: IsShe.default,
     showViews: false,
-    leftSide: false,
   },
 ];
 

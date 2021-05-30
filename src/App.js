@@ -9,13 +9,13 @@ const Buttons = (props) => {
   return (
     <div className="buttonContainer">
       <button
-        onClick={() => props.handleClick(props.video)}
+        onClick={() => props.handleClick(props.video, "more")}
         className="game-button more"
       >
         More <span className="arrow-up"></span>
       </button>
       <button
-        onClick={() => props.handleClick(props.video)}
+        onClick={() => props.handleClick(props.video, "less")}
         className="game-button less"
       >
         Less <span className="arrow-down"></span>
@@ -26,7 +26,7 @@ const Buttons = (props) => {
 };
 
 const ViewView = (props) => {
-  const viewsToShow = props.video.leftSide ? props.video.views : props.views;
+  const viewsToShow = props.index === 0 ? props.video.views : props.views;
   // This regex adds commas after 3 digits to make a formatted (locale) string
   const formattedViews = viewsToShow
     .toString()
@@ -73,7 +73,7 @@ const Side = (props) => {
         )}
         <div className={viewContainerClass}>
           {props.video.showViews && (
-            <ViewView views={countUp} video={props.video} />
+            <ViewView views={countUp} video={props.video} index={props.index} />
           )}
           <p>views</p>
         </div>
@@ -82,17 +82,26 @@ const Side = (props) => {
   );
 };
 
-const Disc = () => {
+const Disc = ({ win }) => {
+  const discClass = win ? "disc disc-win" : "disc";
+  const discText = win ? "&#10004;" : "VS";
+
   return (
-    <div className="disc">
-      <h1>VS</h1>
-    </div>
+    <div
+      className={discClass}
+      dangerouslySetInnerHTML={{ __html: discText }}
+    ></div>
   );
+};
+
+const Score = ({ score }) => {
+  return <div className="score">Score: {score}</div>;
 };
 
 const App = () => {
   const [videos, setVideos] = useState(mainVids);
   const [win, setWin] = useState(false);
+  const [score, setScore] = useState(0);
 
   const isFirstRender = useRef(true);
   useEffect(() => {
@@ -109,20 +118,38 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [win]);
 
-  const handleClick = (video) => {
+  const handleClick = (video, option) => {
     setWin(true);
     const videoIndex = videos.findIndex((vid) => vid.id === video.id);
-    const newVideos = [...videos];
+    let newVideos = [...videos];
     const newVideo = {
       ...videos[videoIndex],
       showViews: true,
     };
+    const previousVideo = videos[0];
+
+    if (
+      (option === "more" && newVideo.views > previousVideo.views) ||
+      (option === "less" && newVideo.views < previousVideo.views)
+    ) {
+      setScore(score + 1);
+    } else {
+      console.log("lose");
+    }
+
     newVideos[videoIndex] = newVideo;
     setVideos(newVideos);
   };
 
-  const sides = videos.slice(0, 3).map((video) => {
-    return <Side key={video.id} handleClick={handleClick} video={video} />;
+  const sides = videos.slice(0, 3).map((video, index) => {
+    return (
+      <Side
+        key={video.id}
+        handleClick={handleClick}
+        video={video}
+        index={index}
+      />
+    );
   });
 
   const sideClass = win ? "splitScreen buttonPressed" : "splitScreen";
@@ -130,7 +157,8 @@ const App = () => {
   return (
     <div className="mainView">
       <div className={sideClass}>{sides}</div>
-      <Disc />
+      <Disc win={win} />
+      <Score score={score} />
     </div>
   );
 };

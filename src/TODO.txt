@@ -1,6 +1,5 @@
-//TO DO destory the whole main view and create a brand new one
-//TO DO fix the button problem
+//TO DO Fix tranistion timings
 //TO DO add API calls to YouTube
-//TO DO add score
 //TO DO add Homepage
 //TO DO add diffrent game modes: subsribers, one channel vidoes, most likes
+//TO OD add modes: trending, dev's choice, specific channel, brand new
