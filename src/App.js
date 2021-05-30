@@ -4,6 +4,8 @@ import { mainVids } from "./videos";
 import "./index.css";
 import { CSSTransition } from "react-transition-group";
 
+const timeBeforeDeleting = 2000;
+
 const Buttons = (props) => {
   return (
     <div className="buttonContainer">
@@ -92,13 +94,6 @@ const Disc = () => {
 const App = () => {
   const [videos, setVideos] = useState(mainVids);
   const [win, setWin] = useState(false);
-  const [classy, setClassy] = useState(false);
-
-  const deleteFirstVideo = () => {
-    // console.log(videos);
-    // const newVideos = videos.slice(1);
-    // setVideos(newVideos);
-  };
 
   const isFirstRender = useRef(true);
   useEffect(() => {
@@ -106,12 +101,12 @@ const App = () => {
       isFirstRender.current = false;
     } else {
       const timer = setTimeout(() => {
-        setClassy(true);
-        // console.log("This will run after 1 second!");
-        // console.log(videos);
-        // const newVideos = videos.slice(1);
-        // setVideos(newVideos);
-      }, 2000);
+        setWin(false);
+        console.log("This will run after 3 seconds!");
+        console.log(videos);
+        const newVideos = videos.slice(1);
+        setVideos(newVideos);
+      }, timeBeforeDeleting);
       return () => clearTimeout(timer);
     }
   }, [win]);
@@ -132,15 +127,12 @@ const App = () => {
     return <Side key={video.id} handleClick={handleClick} video={video} />;
   });
 
-  const classToGive = classy ? "win moveBack" : "win";
-
   return (
     <div className="mainView">
       <CSSTransition
         in={win}
         timeout={200}
-        classNames={classToGive}
-        onEntered={() => deleteFirstVideo()}
+        classNames={"win"}
         onExited={() => console.log("exited")}
       >
         <div className="splitScreen">{sides}</div>

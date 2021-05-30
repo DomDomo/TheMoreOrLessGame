@@ -5,6 +5,13 @@ body,
   width: 100%;
   margin: 0;
   --move-distance: -33.333%;
+  /* Times:
+    1) How long the transition is; 
+    2) Delay before doing the transition;
+  */
+  --how-long: 0.4s;
+  --dealy: 1.4s;
+  --custom-transition: transform var(--how-long) ease-out var(--dealy);
 }
 
 body {
@@ -33,7 +40,7 @@ code {
 .win-enter-done {
   opacity: 1;
   transform: translateX(var(--move-distance));
-  transition: transform 0.4s ease-out 1.4s;
+  transition: var(--custom-transition);
 }
 
 .half {
@@ -169,8 +176,10 @@ p {
     flex-direction: column;
   }
 
-  .splitScreen.win {
-    transform: translateY(-33.333%);
+  .win-enter-done {
+    opacity: 1;
+    transform: translateY(var(--move-distance));
+    transition: var(--custom-transition);
   }
 
   .half {
