@@ -119,26 +119,17 @@ const App = () => {
   const handleClick = (video) => {
     setWin(true);
     const videoIndex = videos.findIndex((vid) => vid.id === video.id);
-    videos[videoIndex].showViews = true;
-    setVideos(videos);
-  };
-
-  const changeLanscape = () => {
-    console.log("asdfasdfasdfasdfasdfasdfasdf");
-    videos.shift();
-    // Put API call here to get next video
-    setVideos(videos);
+    const newVideos = [...videos];
+    const newVideo = {
+      ...videos[videoIndex],
+      showViews: true,
+    };
+    newVideos[videoIndex] = newVideo;
+    setVideos(newVideos);
   };
 
   const sides = videos.slice(0, 3).map((video, index) => {
-    return (
-      <Side
-        key={video.id}
-        changeLanscape={changeLanscape}
-        handleClick={handleClick}
-        video={video}
-      />
-    );
+    return <Side key={video.id} handleClick={handleClick} video={video} />;
   });
 
   const classToGive = classy ? "win moveBack" : "win";
