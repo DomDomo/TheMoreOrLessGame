@@ -3,7 +3,7 @@ import { useCountUp } from "react-countup";
 import { mainVids } from "./videos";
 import "./index.css";
 
-const timeBeforeDeleting = 2000;
+const timeBeforeDeleting = 3000;
 
 const Buttons = (props) => {
   return (
@@ -82,9 +82,9 @@ const Side = (props) => {
   );
 };
 
-const Disc = ({ win }) => {
-  const discClass = win ? "disc disc-win" : "disc";
-  const discText = win ? "&#10004;" : "VS";
+const Disc = (props) => {
+  const discClass = props.win ? "disc disc-win" : "disc";
+  const discText = props.result ? "&#10004;" : "VS";
 
   return (
     <div
@@ -101,6 +101,7 @@ const Score = ({ score }) => {
 const App = () => {
   const [videos, setVideos] = useState(mainVids);
   const [win, setWin] = useState(false);
+  const [result, setResult] = useState(false);
   const [score, setScore] = useState(0);
 
   const isFirstRender = useRef(true);
@@ -110,6 +111,7 @@ const App = () => {
     } else {
       const timer = setTimeout(() => {
         setWin(false);
+        setResult(true);
         const newVideos = videos.slice(1);
         setVideos(newVideos);
       }, timeBeforeDeleting);
@@ -157,7 +159,7 @@ const App = () => {
   return (
     <div className="mainView">
       <div className={sideClass}>{sides}</div>
-      <Disc win={win} />
+      <Disc win={win} result={result} />
       <Score score={score} />
     </div>
   );
