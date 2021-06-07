@@ -1,4 +1,4 @@
-//TO DO fix tranistion timings
+//TO DO fix tranistion timings!!!!!!!!
 //TO DO add json-serer
 //TO DO add API calls to YouTube
 //TO DO add Homepage

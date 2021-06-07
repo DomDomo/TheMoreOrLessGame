@@ -111,10 +111,24 @@ const App = () => {
     } else {
       const timer = setTimeout(() => {
         setWin(false);
-        setResult(true);
+        setResult(false);
         const newVideos = videos.slice(1);
         setVideos(newVideos);
       }, timeBeforeDeleting);
+      return () => clearTimeout(timer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [win]);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      const timer = setTimeout(() => {
+        if (win) {
+          setResult(true);
+        }
+      }, 1100);
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

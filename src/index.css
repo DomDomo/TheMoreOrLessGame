@@ -9,10 +9,10 @@ body,
     1) How long the transition is; 
     2) Delay before doing the transition;
   */
-  --how-long: 0.8s;
-  --dealy: 2.3s;
+  --how-long: 0.7s;
+  --dealy: 1.7s;
   --custom-transition: transform var(--how-long) ease-out var(--dealy);
-  --buton-time: 1s;
+  --buton-time: 0.8s;
 }
 
 body {
@@ -97,7 +97,7 @@ p {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1.1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,8 +110,7 @@ p {
 .disc-win {
   opacity: 0;
   color: black;
-  transform: translate(-50%, -50%) scale(5);
-  backface-visibility: hidden;
+  transform: translate(-50%, -50%) scale(1.5) perspective(1px);
   background-color: #59ad50;
   transition: transform var(--buton-time), opacity 1.5s,
     background-color ease-in 300ms;
