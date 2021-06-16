@@ -3,7 +3,7 @@ import { useCountUp } from "react-countup";
 import { mainVids } from "./videos";
 import "./index.css";
 
-const timeBeforeDeleting = 3000;
+const timeBeforeDeleting = 4000;
 
 const Buttons = (props) => {
   return (
@@ -128,7 +128,7 @@ const App = () => {
         if (win) {
           setResult(true);
         }
-      }, 1100);
+      }, timeBeforeDeleting * 0.36);
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
