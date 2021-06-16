@@ -3,7 +3,9 @@ import { useCountUp } from "react-countup";
 import { mainVids } from "./videos";
 import "./index.css";
 
-const timeBeforeDeleting = 4000;
+const timeBeforeDeleting = 3000;
+const numberUpTime = 1;
+const beforeBeforeDeletingKof = 1500;
 
 const Buttons = (props) => {
   return (
@@ -41,7 +43,7 @@ const Side = (props) => {
     end: props.video.views,
     // Coulnd't find a way to change by bool so put a very long dealy
     delay: 10000000,
-    duration: 1,
+    duration: numberUpTime,
   });
 
   const isFirstRender = useRef(true);
@@ -128,7 +130,7 @@ const App = () => {
         if (win) {
           setResult(true);
         }
-      }, timeBeforeDeleting * 0.36);
+      }, beforeBeforeDeletingKof);
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

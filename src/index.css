@@ -9,10 +9,13 @@ body,
     1) How long the transition is; 
     2) Delay before doing the transition;
   */
-  --how-long: 0.7s;
-  --dealy: 1.7s;
-  --custom-transition: transform var(--how-long) ease-out var(--dealy);
-  --buton-time: 0.8s;
+  --side-time: 0.7s;
+  --side-dealy: 2.25s;
+  --disc-time: 0.8s;
+  --disc-delay: 1.5s;
+  --disc-opacity: 0.8s;
+  --disc-return-time: 0.5s;
+  --background-ease-in: 300ms;
 }
 
 body {
@@ -41,7 +44,7 @@ code {
 .buttonPressed {
   opacity: 1;
   transform: translateX(var(--move-distance));
-  transition: var(--custom-transition);
+  transition: transform var(--side-time) ease-out var(--side-dealy);
 }
 
 .half {
@@ -103,7 +106,7 @@ p {
   align-items: center;
   font-size: 2rem;
   font-weight: bold;
-  transition: transform var(--buton-time);
+  transition: transform var(--disc-return-time);
   opacity: 1;
 }
 
@@ -112,9 +115,9 @@ p {
   color: black;
   transform: translate(-50%, -50%) scale(1.5) perspective(1px);
   background-color: #59ad50;
-  transition: transform var(--buton-time), opacity 1.5s,
-    background-color ease-in 300ms;
-  transition-delay: 1.1s;
+  transition: transform var(--disc-time), opacity var(--disc-opacity),
+    background-color ease-in var(--background-ease-in);
+  transition-delay: var(--disc-delay);
 }
 
 .score {
@@ -205,7 +208,7 @@ p {
   .buttonPressed {
     opacity: 1;
     transform: translateY(var(--move-distance));
-    transition: var(--custom-transition);
+    transition: transform var(--side-time) ease-out var(--side-dealy);
   }
 
   .half {
