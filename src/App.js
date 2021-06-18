@@ -3,9 +3,9 @@ import { useCountUp } from "react-countup";
 import { mainVids } from "./videos";
 import "./index.css";
 
-const timeBeforeDeleting = 3000;
 const numberUpTime = 1;
-const beforeBeforeDeletingKof = 1500;
+const timeBeforeDeleting = 3000;
+const timebeforeBeforeDeleting = 1500;
 
 const Buttons = (props) => {
   return (
@@ -107,6 +107,7 @@ const App = () => {
   const [score, setScore] = useState(0);
 
   const isFirstRender = useRef(true);
+  // This "resets" the game field and deletes the previous video from the list
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -122,6 +123,7 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [win]);
 
+  // This is just to to change the "VS" disc class to do the animation
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -130,7 +132,7 @@ const App = () => {
         if (win) {
           setResult(true);
         }
-      }, beforeBeforeDeletingKof);
+      }, timebeforeBeforeDeleting);
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
