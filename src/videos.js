@@ -2,6 +2,7 @@ const Cicada = require("./images/3301.jpg");
 const Roomba = require("./images/Roomba.jpg");
 const Fallout = require("./images/76.jpg");
 const IsShe = require("./images/Is_She.jpg");
+const iGuess = require("./images/iguess.jpg");
 
 const mainVids = [
   {
@@ -30,6 +31,13 @@ const mainVids = [
     name: "Casually Explained: Is She Into You?",
     views: 16012073,
     image: IsShe.default,
+    showViews: false,
+  },
+  {
+    id: 5,
+    name: "history of the entire world, i guess",
+    views: 122050698,
+    image: iGuess.default,
     showViews: false,
   },
 ];
