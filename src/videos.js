@@ -3,6 +3,7 @@ const Roomba = require("./images/Roomba.jpg");
 const Fallout = require("./images/76.jpg");
 const IsShe = require("./images/Is_She.jpg");
 const iGuess = require("./images/iguess.jpg");
+const sharkBlood = require("./images/shark_blood.jpg");
 
 const mainVids = [
   {
@@ -38,6 +39,13 @@ const mainVids = [
     name: "history of the entire world, i guess",
     views: 122050698,
     image: iGuess.default,
+    showViews: false,
+  },
+  {
+    id: 6,
+    name: "Testing if Sharks Can Smell a Drop of Blood",
+    views: 90286366,
+    image: sharkBlood.default,
     showViews: false,
   },
 ];
