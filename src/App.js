@@ -63,7 +63,9 @@ const Side = (props) => {
   return (
     <div
       className="half"
-      style={{ backgroundImage: `url(${props.video.image})` }}
+      style={{
+        backgroundImage: `url(https://img.youtube.com/vi/${props.video.id}/maxresdefault.jpg)`,
+      }}
     >
       <div className="top">
         <p className="videoTitle">"{props.video.name}"</p>
