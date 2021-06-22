@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import videoService from "./services/videos";
 import { useCountUp } from "react-countup";
-import { mainVids } from "./videos";
 import "./index.css";
 
 const numberUpTime = 1;
@@ -54,9 +54,9 @@ const Side = (props) => {
       start();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.video.showViews]);
+  }, [props.video.show]);
 
-  const viewContainerClass = props.video.showViews
+  const viewContainerClass = props.video.show
     ? "viewContainer fadeIn"
     : "viewContainer";
 
@@ -72,11 +72,11 @@ const Side = (props) => {
         <p>has</p>
       </div>
       <div className="bottom">
-        {!props.video.showViews && (
+        {!props.video.show && (
           <Buttons video={props.video} handleClick={props.handleClick} />
         )}
         <div className={viewContainerClass}>
-          {props.video.showViews && (
+          {props.video.show && (
             <ViewView views={countUp} video={props.video} index={props.index} />
           )}
           <p>views</p>
@@ -103,10 +103,17 @@ const Score = ({ score }) => {
 };
 
 const App = () => {
-  const [videos, setVideos] = useState(mainVids);
+  const [videos, setVideos] = useState([]);
   const [win, setWin] = useState(false);
   const [result, setResult] = useState(false);
   const [score, setScore] = useState(0);
+
+  // Get inital vidoes
+  useEffect(() => {
+    videoService.getInitialVideos().then((videos) => {
+      setVideos(videos);
+    });
+  }, []);
 
   const isFirstRender = useRef(true);
   // This "resets" the game field and deletes the previous video from the list
@@ -146,7 +153,7 @@ const App = () => {
     let newVideos = [...videos];
     const newVideo = {
       ...videos[videoIndex],
-      showViews: true,
+      show: true,
     };
     const previousVideo = videos[0];
 
