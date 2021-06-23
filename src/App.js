@@ -110,6 +110,7 @@ const App = () => {
 
   // Get inital vidoes
   useEffect(() => {
+    //videoService.pickRandomChannel();
     videoService.getInitialVideos().then((videos) => {
       setVideos(videos);
     });
@@ -122,10 +123,13 @@ const App = () => {
       isFirstRender.current = false;
     } else {
       const timer = setTimeout(() => {
-        setWin(false);
-        setResult(false);
-        const newVideos = videos.slice(1);
-        setVideos(newVideos);
+        if (win) {
+          setWin(false);
+          setResult(false);
+          const newVideos = videos.slice(1);
+          console.log(newVideos);
+          setVideos(newVideos);
+        }
       }, timeBeforeDeleting);
       return () => clearTimeout(timer);
     }
@@ -166,7 +170,12 @@ const App = () => {
       console.log("lose");
     }
 
+    // console.log("newVideos");
+    // console.log(newVideos);
     newVideos[videoIndex] = newVideo;
+    videoService.addVideo().then((newVideo) => {
+      setVideos(newVideos.concat(newVideo));
+    });
     setVideos(newVideos);
   };
 
@@ -180,6 +189,9 @@ const App = () => {
       />
     );
   });
+
+  // console.log("main");
+  // console.log(videos);
 
   const sideClass = win ? "splitScreen buttonPressed" : "splitScreen";
 
