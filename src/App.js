@@ -173,9 +173,9 @@ const App = () => {
     // console.log("newVideos");
     // console.log(newVideos);
     newVideos[videoIndex] = newVideo;
-    videoService.addVideo().then((newVideo) => {
-      setVideos(newVideos.concat(newVideo));
-    });
+    // videoService.addVideo().then((newVideo) => {
+    //   setVideos(newVideos.concat(newVideo));
+    // });
     setVideos(newVideos);
   };
 
