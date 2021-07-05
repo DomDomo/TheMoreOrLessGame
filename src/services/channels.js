@@ -14,6 +14,11 @@ const channels = [
     uploads: "UUR1D15p_vdP3HkrH8wgjQRw",
     channel: "Internet Historian",
   },
+  {
+    id: "UCr3cBLTYmIK9kY0F_OdFWFQ",
+    uploads: "UUr3cBLTYmIK9kY0F_OdFWFQ",
+    channel: "Casually Explained",
+  },
 ];
 
 export { channels };
