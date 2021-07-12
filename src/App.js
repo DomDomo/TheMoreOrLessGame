@@ -141,7 +141,6 @@ const App = () => {
           let newVideos = videos.slice(1);
           setVideos(newVideos);
           videoService.addVideo().then((newVideo) => {
-            console.log(videos);
             if (newVideo !== undefined)
               setVideos(videos.concat(newVideo).slice(1));
           });

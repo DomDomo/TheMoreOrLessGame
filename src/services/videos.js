@@ -24,7 +24,6 @@ const addVideo = () => {
       newVideo.id = rndVideo.id.videoId;
       newVideo.name = rndVideo.snippet.title.replace("&#39;", "'"); // For some reason youtube's apostrophes are a weird jumble
       const getRequestURL = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${rndVideo.id.videoId}&key=${KEY}`;
-      console.log(getRequestURL);
       return axios.get(getRequestURL);
     })
     .then((response) => {
@@ -37,6 +36,11 @@ const addVideo = () => {
     .catch((error) => {
       if (error.message.includes("status code 500")) {
         console.log("Found video with same id");
+      } else if (error.message.includes("403")) {
+        console.clear();
+        console.log("Exceeded quota");
+      } else {
+        console.error(error);
       }
     });
 };
