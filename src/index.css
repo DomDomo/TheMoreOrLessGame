@@ -1,6 +1,7 @@
+#root,
 html,
 body,
-#root {
+.App {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -25,6 +26,20 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.homePage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: url(./images/main.jpg) no-repeat 50% / cover;
+}
+
+.homePage h1 {
+  color: #fff;
 }
 
 .mainView {
@@ -166,6 +181,14 @@ p {
   font-size: 1.5em;
   font-family: "Nunito", sans-serif;
   transition: all 0.1s ease-out;
+}
+
+.start-game {
+  border: 0.125rem solid #59ad50;
+  background-color: #59ad50;
+  color: #fff;
+  text-decoration: none !important;
+  cursor: pointer;
 }
 
 .pNextToButtons {
