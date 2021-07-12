@@ -22,17 +22,22 @@ const addVideo = () => {
       const topVideos = response.data.items;
       const rndVideo = topVideos[Math.floor(Math.random() * topVideos.length)];
       newVideo.id = rndVideo.id.videoId;
-      newVideo.name = rndVideo.snippet.title;
-      return axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${rndVideo.id.videoId}&key=${KEY}`
-      );
+      newVideo.name = rndVideo.snippet.title.replace("&#39;", "'"); // For some reason youtube's apostrophes are a weird jumble
+      const getRequestURL = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${rndVideo.id.videoId}&key=${KEY}`;
+      console.log(getRequestURL);
+      return axios.get(getRequestURL);
     })
     .then((response) => {
       newVideo.views = response.data.items[0].statistics.viewCount;
-      //return axios.post(baseUrl, newVideo);
+      return axios.post(baseUrl, newVideo);
     })
     .then((response) => {
       return newVideo;
+    })
+    .catch((error) => {
+      if (error.message.includes("status code 500")) {
+        console.log("Found video with same id");
+      }
     });
 };
 

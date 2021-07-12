@@ -7,6 +7,16 @@ const numberUpTime = 1;
 const timeBeforeDeleting = 3000;
 const timebeforeBeforeDeleting = 1500;
 
+/* Randomize array in-place using Durstenfeld shuffle algorithm */
+function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+}
+
 const Buttons = (props) => {
   return (
     <div className="buttonContainer">
@@ -112,6 +122,8 @@ const App = () => {
   useEffect(() => {
     //videoService.pickRandomChannel();
     videoService.getInitialVideos().then((videos) => {
+      shuffleArray(videos);
+      videos[0].show = true;
       setVideos(videos);
     });
   }, []);
@@ -126,9 +138,13 @@ const App = () => {
         if (win) {
           setWin(false);
           setResult(false);
-          const newVideos = videos.slice(1);
-          console.log(newVideos);
+          let newVideos = videos.slice(1);
           setVideos(newVideos);
+          videoService.addVideo().then((newVideo) => {
+            console.log(videos);
+            if (newVideo !== undefined)
+              setVideos(videos.concat(newVideo).slice(1));
+          });
         }
       }, timeBeforeDeleting);
       return () => clearTimeout(timer);
@@ -160,22 +176,19 @@ const App = () => {
       show: true,
     };
     const previousVideo = videos[0];
+    const preViews = previousVideo.views;
+    const newViews = video.views;
 
     if (
-      (option === "more" && newVideo.views > previousVideo.views) ||
-      (option === "less" && newVideo.views < previousVideo.views)
+      (option === "more" && parseInt(preViews) < parseInt(newViews)) ||
+      (option === "less" && parseInt(preViews) > parseInt(newViews))
     ) {
       setScore(score + 1);
     } else {
       console.log("lose");
     }
-
-    // console.log("newVideos");
-    // console.log(newVideos);
     newVideos[videoIndex] = newVideo;
-    // videoService.addVideo().then((newVideo) => {
-    //   setVideos(newVideos.concat(newVideo));
-    // });
+
     setVideos(newVideos);
   };
 
@@ -189,9 +202,6 @@ const App = () => {
       />
     );
   });
-
-  // console.log("main");
-  // console.log(videos);
 
   const sideClass = win ? "splitScreen buttonPressed" : "splitScreen";
 
