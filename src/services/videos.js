@@ -2,7 +2,7 @@ import axios from "axios";
 import { channels } from "./channels";
 const baseUrl = "http://localhost:3001/videos";
 
-const KEY = "AIzaSyDG7Nawt77sYZKu2BQG3mk46Eq4KblO-QY";
+const KEY = process.env.REACT_APP_YT_API_KEY;
 
 const getInitialVideos = () => {
   const request = axios.get(baseUrl);

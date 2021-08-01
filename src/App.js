@@ -2,6 +2,7 @@ import Game from "./Game";
 import Home from "./Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./index.css";
+require("dotenv").config();
 
 function App() {
   return (
