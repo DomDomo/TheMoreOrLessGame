@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import videoService from "./services/videos";
 import { useCountUp } from "react-countup";
+import { Link } from "react-router-dom";
 
 const numberUpTime = 1;
 const timeBeforeDeleting = 3000;
 const timebeforeBeforeDeleting = 1500;
+const timebeforeGameOver = 2200;
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm */
 function shuffleArray(array) {
@@ -97,8 +99,20 @@ const Side = (props) => {
 };
 
 const Disc = (props) => {
-  const discClass = props.win ? "disc disc-win" : "disc";
-  const discText = props.result ? "&#10004;" : "VS";
+  let discClass = "disc";
+  let discText = "VS";
+
+  if (props.lose) {
+    discClass += " disc-move disc-lose";
+  } else if (props.win) {
+    discClass += " disc-move disc-win";
+  }
+
+  if (props.cross) {
+    discText = "&#10006;";
+  } else if (props.check) {
+    discText = "&#10004;";
+  }
 
   return (
     <div
@@ -112,13 +126,56 @@ const Score = ({ score }) => {
   return <div className="score">Score: {score}</div>;
 };
 
+const GamePage = (props) => {
+  const sideClass = props.win ? "splitScreen buttonPressed" : "splitScreen";
+
+  return (
+    <div className="mainView">
+      <div className={sideClass}>{props.sides}</div>
+      <Disc
+        win={props.win}
+        check={props.check}
+        cross={props.cross}
+        lose={props.lose}
+      />
+      <Score score={props.score} />
+    </div>
+  );
+};
+
+const ScorePage = ({ score }) => {
+  return (
+    <div className="simplePage scorePage">
+      <header>
+        <h1 className="startHeader">Your score is</h1>
+
+        <h1 className="scoreNumber">{score}</h1>
+        <button
+          style={{ textDecoration: "none" }}
+          type="button"
+          onClick={() => window.location.reload()}
+          className="game-button start-game"
+        >
+          New Game
+        </button>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <button type="button" className="game-button start-game">
+            Menu
+          </button>
+        </Link>
+      </header>
+    </div>
+  );
+};
+
 const Game = () => {
   const [videos, setVideos] = useState([]);
-  const [win, setWin] = useState(false);
-  const [result, setResult] = useState(false);
   const [score, setScore] = useState(0);
-
-  let history = useHistory();
+  const [showScore, setShowScore] = useState(false);
+  const [win, setWin] = useState(false);
+  const [check, setCheck] = useState(false);
+  const [lose, setLose] = useState(false);
+  const [cross, setCross] = useState(false);
 
   // Get inital vidoes
   useEffect(() => {
@@ -139,7 +196,7 @@ const Game = () => {
       const timer = setTimeout(() => {
         if (win) {
           setWin(false);
-          setResult(false);
+          setCheck(false);
           let newVideos = videos.slice(1);
           setVideos(newVideos);
           videoService.addVideo().then((newVideo) => {
@@ -159,8 +216,10 @@ const Game = () => {
       isFirstRender.current = false;
     } else {
       const timer = setTimeout(() => {
-        if (win) {
-          setResult(true);
+        if (lose) {
+          setCross(true);
+        } else if (win) {
+          setCheck(true);
         }
       }, timebeforeBeforeDeleting);
       return () => clearTimeout(timer);
@@ -168,8 +227,22 @@ const Game = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [win]);
 
+  // This is a timer for when a player loses it shows the score page
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      const timer = setTimeout(() => {
+        if (lose) {
+          setShowScore(true);
+        }
+      }, timebeforeGameOver);
+      return () => clearTimeout(timer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lose]);
+
   const handleClick = (video, option) => {
-    setWin(true);
     const videoIndex = videos.findIndex((vid) => vid.id === video.id);
     let newVideos = [...videos];
     const newVideo = {
@@ -185,15 +258,17 @@ const Game = () => {
       (option === "less" && parseInt(preViews) > parseInt(newViews))
     ) {
       setScore(score + 1);
+      setWin(true);
     } else {
-      console.log("lose");
-      history.push("/");
+      setLose(true);
+      setWin(true);
     }
     newVideos[videoIndex] = newVideo;
 
     setVideos(newVideos);
   };
 
+  // Only have 3 videos in play. 2 in view and 1 to be slid in. (Setup this way due to how CSS transitions work)
   const sides = videos.slice(0, 3).map((video, index) => {
     return (
       <Side
@@ -205,14 +280,18 @@ const Game = () => {
     );
   });
 
-  const sideClass = win ? "splitScreen buttonPressed" : "splitScreen";
-
+  if (showScore) {
+    return <ScorePage score={score} />;
+  }
   return (
-    <div className="mainView">
-      <div className={sideClass}>{sides}</div>
-      <Disc win={win} result={result} />
-      <Score score={score} />
-    </div>
+    <GamePage
+      sides={sides}
+      win={win}
+      check={check}
+      lose={lose}
+      cross={cross}
+      score={score}
+    />
   );
 };
 

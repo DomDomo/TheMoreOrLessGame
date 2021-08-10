@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="homePage">
+    <div className="simplePage homePage">
       <header>
         <h1 className="startHeader">
           The <span className="moreWord">More</span> or{" "}

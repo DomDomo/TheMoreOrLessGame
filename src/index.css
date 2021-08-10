@@ -28,19 +28,39 @@ code {
     monospace;
 }
 
-.homePage {
+.simplePage {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: url(./images/main.jpg) no-repeat 50% / cover;
+
   box-shadow: inset 0 0 0 100vw rgba(0, 0, 0, 0.35);
+}
+
+.simplePage header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.homePage {
+  background: url(./images/main.jpg) no-repeat 50% / cover;
 }
 
 .homePage header {
   flex-basis: 60%;
+}
+
+.scorePage {
+  color: white;
+  background: url(./images/score.jpeg) no-repeat 50% / cover;
+}
+
+.scoreNumber {
+  font-size: 4rem;
 }
 
 .startHeader {
@@ -147,14 +167,21 @@ p {
   opacity: 1;
 }
 
-.disc-win {
+.disc-move {
   opacity: 0;
   color: black;
   transform: translate(-50%, -50%) scale(1.5) perspective(1px);
-  background-color: #59ad50;
   transition: transform var(--disc-time), opacity var(--disc-opacity),
     background-color ease-in var(--background-ease-in);
   transition-delay: var(--disc-delay);
+}
+
+.disc-win {
+  background-color: #59ad50;
+}
+
+.disc-lose {
+  background-color: red;
 }
 
 .score {

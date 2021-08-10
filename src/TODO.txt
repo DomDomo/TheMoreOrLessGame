@@ -1,5 +1,5 @@
-//TO DO fix React useEffect bug
-//TO DO add API calls to YouTube
-//TO DO add Homepage
-//TO DO add diffrent game modes: subsribers, one channel vidoes, most likes
+// TO DO make win, lose, check and cross into one state property
+// TO DO fix Youtube API calls
+// TO DO add real database support
 //TO OD add modes: trending, dev's choice, specific channel, brand new
+//TO DO add diffrent game modes: subsribers, one channel vidoes, most likes
