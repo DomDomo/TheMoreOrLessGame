@@ -36,6 +36,28 @@ code {
   align-items: center;
   justify-content: center;
   background: url(./images/main.jpg) no-repeat 50% / cover;
+  box-shadow: inset 0 0 0 100vw rgba(0, 0, 0, 0.35);
+}
+
+.homePage header {
+  flex-basis: 60%;
+}
+
+.startHeader {
+  font-family: "Open Sans", sans-serif;
+  text-shadow: 5px 5px #000;
+}
+
+.homePage h1 {
+  font-size: 3rem;
+}
+
+.lessWord {
+  color: #c75454;
+}
+
+.moreWord {
+  color: #59ad50;
 }
 
 .homePage h1 {
@@ -189,6 +211,8 @@ p {
   color: #fff;
   text-decoration: none !important;
   cursor: pointer;
+  box-shadow: 5px 5px #000;
+  text-shadow: 2px 2px #000;
 }
 
 .pNextToButtons {
@@ -199,6 +223,7 @@ p {
   color: black;
   background: white;
   cursor: pointer;
+  text-shadow: 2px 2px #fff;
 }
 
 .more:hover span {
