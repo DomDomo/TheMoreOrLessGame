@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
 import videoService from "./services/videos";
 import { useCountUp } from "react-countup";
 import { Link } from "react-router-dom";
@@ -98,19 +97,19 @@ const Side = (props) => {
   );
 };
 
-const Disc = (props) => {
+const Disc = ({ result }) => {
   let discClass = "disc";
   let discText = "VS";
 
-  if (props.lose) {
+  if (result.lose) {
     discClass += " disc-move disc-lose";
-  } else if (props.win) {
+  } else if (result.win) {
     discClass += " disc-move disc-win";
   }
 
-  if (props.cross) {
+  if (result.cross) {
     discText = "&#10006;";
-  } else if (props.check) {
+  } else if (result.check) {
     discText = "&#10004;";
   }
 
@@ -127,17 +126,14 @@ const Score = ({ score }) => {
 };
 
 const GamePage = (props) => {
-  const sideClass = props.win ? "splitScreen buttonPressed" : "splitScreen";
+  const sideClass = props.result.win
+    ? "splitScreen buttonPressed"
+    : "splitScreen";
 
   return (
     <div className="mainView">
       <div className={sideClass}>{props.sides}</div>
-      <Disc
-        win={props.win}
-        check={props.check}
-        cross={props.cross}
-        lose={props.lose}
-      />
+      <Disc result={props.result} />
       <Score score={props.score} />
     </div>
   );
@@ -172,10 +168,12 @@ const Game = () => {
   const [videos, setVideos] = useState([]);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
-  const [win, setWin] = useState(false);
-  const [check, setCheck] = useState(false);
-  const [lose, setLose] = useState(false);
-  const [cross, setCross] = useState(false);
+  const [result, setResult] = useState({
+    win: false,
+    check: false,
+    lose: false,
+    cross: false,
+  });
 
   // Get inital vidoes
   useEffect(() => {
@@ -194,9 +192,9 @@ const Game = () => {
       isFirstRender.current = false;
     } else {
       const timer = setTimeout(() => {
-        if (win) {
-          setWin(false);
-          setCheck(false);
+        if (result.win) {
+          console.log("heyyyyyyyyyy");
+          setResult({ ...result, win: false, check: false });
           let newVideos = videos.slice(1);
           setVideos(newVideos);
           videoService.addVideo().then((newVideo) => {
@@ -208,7 +206,7 @@ const Game = () => {
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [win]);
+  }, [result.win]);
 
   // This is just to to change the "VS" disc class to do the animation
   useEffect(() => {
@@ -216,16 +214,16 @@ const Game = () => {
       isFirstRender.current = false;
     } else {
       const timer = setTimeout(() => {
-        if (lose) {
-          setCross(true);
-        } else if (win) {
-          setCheck(true);
+        if (result.lose) {
+          setResult({ ...result, cross: true });
+        } else if (result.win) {
+          setResult({ ...result, check: true });
         }
       }, timebeforeBeforeDeleting);
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [win]);
+  }, [result.win, result.lose]);
 
   // This is a timer for when a player loses it shows the score page
   useEffect(() => {
@@ -233,14 +231,14 @@ const Game = () => {
       isFirstRender.current = false;
     } else {
       const timer = setTimeout(() => {
-        if (lose) {
+        if (result.lose) {
           setShowScore(true);
         }
       }, timebeforeGameOver);
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lose]);
+  }, [result.lose]);
 
   const handleClick = (video, option) => {
     const videoIndex = videos.findIndex((vid) => vid.id === video.id);
@@ -258,10 +256,10 @@ const Game = () => {
       (option === "less" && parseInt(preViews) > parseInt(newViews))
     ) {
       setScore(score + 1);
-      setWin(true);
+      setResult({ ...result, win: true });
     } else {
-      setLose(true);
-      setWin(true);
+      console.log("losssssing");
+      setResult({ ...result, lose: true });
     }
     newVideos[videoIndex] = newVideo;
 
@@ -283,16 +281,7 @@ const Game = () => {
   if (showScore) {
     return <ScorePage score={score} />;
   }
-  return (
-    <GamePage
-      sides={sides}
-      win={win}
-      check={check}
-      lose={lose}
-      cross={cross}
-      score={score}
-    />
-  );
+  return <GamePage sides={sides} result={result} score={score} />;
 };
 
 export default Game;
