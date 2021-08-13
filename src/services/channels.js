@@ -19,6 +19,11 @@ const channels = [
     uploads: "UUr3cBLTYmIK9kY0F_OdFWFQ",
     channel: "Casually Explained",
   },
+  {
+    id: "UCtHaxi4GTYDpJgMSGy7AeSw",
+    uploads: "UUtHaxi4GTYDpJgMSGy7AeSw",
+    channel: "Michael Reeves",
+  },
 ];
 
 export { channels };

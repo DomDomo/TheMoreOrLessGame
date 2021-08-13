@@ -1,49 +1,119 @@
 import axios from "axios";
 import { channels } from "./channels";
-const baseUrl = "http://localhost:3001/videos";
+import firebase from "../util/firebase";
+
+const db = firebase.firestore();
 
 const KEY = process.env.REACT_APP_YT_API_KEY;
+const VIDEO_NUM = 30;
 
-const getInitialVideos = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
+const CHANNEL = channels[4];
+
+let goodTopVideos = [];
+
+const getInitialVideos = async () => {
+  const snapshot = await db.collection("channels").get();
+  const allChannels = snapshot.docs.map((doc) => doc.data());
+
+  let allVideos = [];
+  allChannels.forEach((channel) => {
+    console.log(channel.videos);
+    allVideos = allVideos.concat(channel.videos);
+  });
+
+  return allVideos;
 };
 
-const addVideo = () => {
-  let newVideo = {
-    show: false,
-  };
-  const rndChannel = channels[Math.floor(Math.random() * channels.length)];
+const fetchVideoViews = async (url) => {
+  console.log(`Fetching ${url}`);
+  const info = await axios(url); // API call to get item info.
+  return info.data.items[0].statistics.viewCount;
+};
+
+const getAllVideoViews = async (videos) => {
+  const requests = videos.map((vid) => {
+    const requestURL = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${vid.id}&key=${KEY}`;
+    return fetchVideoViews(requestURL).then((info) => {
+      return { ...vid, views: info };
+    });
+  });
+
+  return Promise.all(requests);
+};
+
+const updateDbWithViews = (vidsWithViews) => {
+  db.collection("channels")
+    .doc(CHANNEL.id)
+    .update({
+      videos: vidsWithViews,
+    })
+    .then(() => {
+      console.log(
+        `updated ${CHANNEL.id} (${CHANNEL.channel}) videos with views`
+      );
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
+};
+
+const getNoViewVideos = () => {
+  const channel = CHANNEL;
   return axios
     .get(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${rndChannel.id}&key=${KEY}&maxResults=50&order=viewcount`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel.id}&key=${KEY}&maxResults=${VIDEO_NUM}&order=viewcount`
     )
     .then((response) => {
       const topVideos = response.data.items;
-      const rndVideo = topVideos[Math.floor(Math.random() * topVideos.length)];
-      newVideo.id = rndVideo.id.videoId;
-      newVideo.name = rndVideo.snippet.title.replace("&#39;", "'"); // For some reason youtube's apostrophes are a weird jumble
-      const getRequestURL = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${rndVideo.id.videoId}&key=${KEY}`;
-      return axios.get(getRequestURL);
+      topVideos.forEach((video) => {
+        let newVideo = {
+          show: false,
+        };
+        newVideo.id = video.id.videoId;
+        newVideo.channel = video.snippet.channelTitle;
+        newVideo.name = video.snippet.title.replace("&#39;", "'"); // For some reason youtube's apostrophes are a weird jumble;
+        if (newVideo.id !== undefined) {
+          goodTopVideos.push(newVideo);
+        }
+      });
+      console.log(goodTopVideos);
+      return db.collection("channels").doc(channel.id).set({
+        id: channel.id,
+        upload_id: channel.uploads,
+        channel: channel.channel,
+        videos: goodTopVideos,
+      });
     })
-    .then((response) => {
-      newVideo.views = response.data.items[0].statistics.viewCount;
-      return axios.post(baseUrl, newVideo);
-    })
-    .then((response) => {
-      return newVideo;
+    .then(() => {
+      console.log("Document successfully written!");
     })
     .catch((error) => {
-      if (error.message.includes("status code 500")) {
-        console.log("Found video with same id");
-      } else if (error.message.includes("403")) {
-        console.clear();
-        console.log("Exceeded quota");
+      console.error("Error writing document: ", error);
+    });
+};
+
+const getVideosWithViews = () => {
+  db.collection("channels")
+    .doc(CHANNEL.id)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        getAllVideoViews(doc.data().videos).then((vidsWithViews) => {
+          console.log(vidsWithViews);
+          updateDbWithViews(vidsWithViews);
+        });
       } else {
-        console.error(error);
+        console.log("No such document!");
       }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
     });
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getInitialVideos, addVideo };
+export default {
+  getInitialVideos,
+  getNoViewVideos,
+  getVideosWithViews,
+};

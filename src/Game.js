@@ -193,14 +193,13 @@ const Game = () => {
     } else {
       const timer = setTimeout(() => {
         if (result.win) {
-          console.log("heyyyyyyyyyy");
           setResult({ ...result, win: false, check: false });
           let newVideos = videos.slice(1);
           setVideos(newVideos);
-          videoService.addVideo().then((newVideo) => {
-            if (newVideo !== undefined)
-              setVideos(videos.concat(newVideo).slice(1));
-          });
+          // videoService.addVideo().then((newVideo) => {
+          //   if (newVideo !== undefined)
+          //     setVideos(videos.concat(newVideo).slice(1));
+          // });
         }
       }, timeBeforeDeleting);
       return () => clearTimeout(timer);
@@ -258,7 +257,6 @@ const Game = () => {
       setScore(score + 1);
       setResult({ ...result, win: true });
     } else {
-      console.log("losssssing");
       setResult({ ...result, lose: true });
     }
     newVideos[videoIndex] = newVideo;
@@ -268,6 +266,8 @@ const Game = () => {
 
   // Only have 3 videos in play. 2 in view and 1 to be slid in. (Setup this way due to how CSS transitions work)
   const sides = videos.slice(0, 3).map((video, index) => {
+    // Views should be an int in the database but firebase didn't think so and now I have to convert it here
+    video.views = parseInt(video.views);
     return (
       <Side
         key={video.id}

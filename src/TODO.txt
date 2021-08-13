@@ -1,5 +1,3 @@
-// TO DO make win, lose, check and cross into one state property
-// TO DO fix Youtube API calls
-// TO DO add real database support
-//TO OD add modes: trending, dev's choice, specific channel, brand new
-//TO DO add diffrent game modes: subsribers, one channel vidoes, most likes
+// TO DO add plan for when player reaches the end of the video array
+// TO OD add modes: trending, dev's choice, specific channel, brand new
+// TO DO add diffrent game modes: subsribers, one channel vidoes, most likes
