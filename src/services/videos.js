@@ -1,13 +1,10 @@
 import axios from "axios";
-import { channels } from "./channels";
 import firebase from "../util/firebase";
 
 const db = firebase.firestore();
 
 const KEY = process.env.REACT_APP_YT_API_KEY;
 const VIDEO_NUM = 30;
-
-const CHANNEL = channels[4];
 
 let goodTopVideos = [];
 
@@ -41,15 +38,15 @@ const getAllVideoViews = async (videos) => {
   return Promise.all(requests);
 };
 
-const updateDbWithViews = (vidsWithViews) => {
+const updateDbWithViews = (channel, vidsWithViews) => {
   db.collection("channels")
-    .doc(CHANNEL.id)
+    .doc(channel.id)
     .update({
       videos: vidsWithViews,
     })
     .then(() => {
       console.log(
-        `updated ${CHANNEL.id} (${CHANNEL.channel}) videos with views`
+        `updated ${channel.id} (${channel.channel}) videos with views`
       );
     })
     .catch((error) => {
@@ -57,8 +54,7 @@ const updateDbWithViews = (vidsWithViews) => {
     });
 };
 
-const getNoViewVideos = () => {
-  const channel = CHANNEL;
+const getNoViewVideos = (channel) => {
   return axios
     .get(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel.id}&key=${KEY}&maxResults=${VIDEO_NUM}&order=viewcount`
@@ -92,15 +88,15 @@ const getNoViewVideos = () => {
     });
 };
 
-const getVideosWithViews = () => {
+const getVideosWithViews = (channel) => {
   db.collection("channels")
-    .doc(CHANNEL.id)
+    .doc(channel.id)
     .get()
     .then((doc) => {
       if (doc.exists) {
         getAllVideoViews(doc.data().videos).then((vidsWithViews) => {
           console.log(vidsWithViews);
-          updateDbWithViews(vidsWithViews);
+          updateDbWithViews(channel, vidsWithViews);
         });
       } else {
         console.log("No such document!");

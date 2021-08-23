@@ -1,5 +1,6 @@
 import Game from "./Game";
 import Home from "./Home";
+import Add from "./Add";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./index.css";
 require("dotenv").config();
@@ -14,6 +15,9 @@ function App() {
           </Route>
           <Route exact path="/game">
             <Game />
+          </Route>
+          <Route exact path="/add">
+            <Add />
           </Route>
         </Switch>
       </div>
