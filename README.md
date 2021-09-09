@@ -1,6 +1,6 @@
 # The More or Less Game
 
-This project aims to recreate [The Higher Lower Game](http://www.higherlowergame.com/), but instead of search results, it will take data from YouTube: subscribers of a channel, views of a video.
+This project takes inspiration from [The Higher Lower Game](http://www.higherlowergame.com/), but instead of search results, your job is to guess which video has the more views on Youtube.
 
 # Getting Started with Create React App
 
