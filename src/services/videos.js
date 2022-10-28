@@ -14,7 +14,6 @@ const getInitialVideos = async () => {
 
   let allVideos = [];
   allChannels.forEach((channel) => {
-    console.log(channel.videos);
     allVideos = allVideos.concat(channel.videos);
   });
 
@@ -72,7 +71,6 @@ const getNoViewVideos = (channel) => {
           goodTopVideos.push(newVideo);
         }
       });
-      console.log(goodTopVideos);
       return db.collection("channels").doc(channel.id).set({
         id: channel.id,
         upload_id: channel.uploads,
