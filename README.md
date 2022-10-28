@@ -1,4 +1,4 @@
-# The More or Less Game
+# The MoreOrLess Game
 
 This project takes inspiration from [The Higher Lower Game](http://www.higherlowergame.com/), but instead of search results, your job is to guess which video has the more views on Youtube.
 
