@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import videoService from "./services/videos";
 import { useCountUp } from "react-countup";
 import { Link } from "react-router-dom";
@@ -140,6 +141,13 @@ const GamePage = (props) => {
 };
 
 const ScorePage = ({ score }) => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push("/");
+    history.goBack();
+  };
+
   return (
     <div className="simplePage scorePage">
       <header>
@@ -149,7 +157,7 @@ const ScorePage = ({ score }) => {
         <button
           style={{ textDecoration: "none" }}
           type="button"
-          onClick={() => window.location.reload()}
+          onClick={handleClick}
           className="game-button start-game"
         >
           New Game
